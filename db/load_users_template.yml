@@ -1,0 +1,25 @@
+team_1:
+  name: Team1
+
+team_2:
+  name: Team2
+
+user_1:
+  full_name: Usr1
+  email: usr1@gmail.com
+  teams: team_1, team_2
+  password: secretPassword
+
+user_2:
+  full_name: Usr2
+  email: usr2@gmail.com
+  teams: team_1
+
+user_3:
+  full_name: Usr3
+  email: usr3@gmail.com
+  teams: team_2
+
+user_4:
+  full_name: Usr4
+  email: usr4@gmail.com

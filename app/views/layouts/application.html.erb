@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta data-hook="head-js">
+    <title><%=t "head.title", title: (yield :head_title) %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
+    <%= favicon_link_tag "favicon.ico" %>
+    <%= favicon_link_tag "favicon-16.png", type: "image/png", size: "16x16" %>
+    <%= favicon_link_tag "favicon-32.png", type: "image/png", size: "32x32" %>
+    <%= favicon_link_tag "favicon-48.png", type: "image/png", size: "48x48" %>
+    <%= stylesheet_pack_tag 'fontawesome' %>
+
+    <%= csrf_meta_tags %>
+    <% if content_for?(:head) %>
+      <%= yield(:head) %>
+    <% end %>
+  </head>
+  <body
+    class="<%= yield :body_class %>"
+    <% if user_signed_in? && current_team.present? %>
+    data-atwho-users-url="<%= atwho_users_team_path(current_team) %>"
+    data-atwho-task-url="<%= atwho_my_modules_team_path(current_team) %>"
+    data-atwho-project-url="<%= atwho_projects_team_path(current_team) %>"
+    data-atwho-experiment-url="<%= atwho_experiments_team_path(current_team) %>"
+    data-atwho-repositories-url="<%= atwho_repositories_team_path(current_team) %>"
+    data-atwho-rep-items-url="<%= atwho_rep_items_team_path(current_team) %>"
+    data-atwho-menu-items="<%= atwho_menu_items_team_path(current_team) %>"
+    data-file-max-size-mb="<%= Rails.configuration.x.file_max_size_mb %>"
+    <% end %>
+  >
+
+    <span style="display: none;" data-hook="body-js"></span>
+    <span style="display: none;" data-hook="application-body-html"></span>
+
+    <!-- About us modal -->
+    <%= render "shared/about_modal" %>
+    <%= render "shared/file_preview_modal.html.erb" %>
+    <%= render "shared/navigation" %>
+
+    <% unless user_signed_in? %>
+      <%= render partial: 'shared/flash_alerts',
+                 locals: { flash: flash, notice: notice, alert: alert } %>
+    <% end %>
+
+    <%= render "shared/left_menu_bar" if user_signed_in? && current_user.teams.exists? %>
+
+    <div id="content-wrapper">
+      <% if user_signed_in? && current_user.teams.empty? %>
+        <!-- If member of no teams -->
+        <div class="jumbotron">
+          <h2><%=t 'general.no_teams.title' %></h2>
+          <p data-hook="general-no-teams-text"><%=t 'general.no_teams.text' %></p>
+        </div>
+      <% else %>
+        <%= yield :flash_messages_div %>
+        <%= yield :content %>
+      <% end %>
+    </div>
+
+    <script data-hook="footer-js">
+      // GLOBALS
+      window.IN_REQUEST = false;
+    </script>
+  </body>
+</html>

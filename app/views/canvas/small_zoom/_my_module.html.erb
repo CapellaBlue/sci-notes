@@ -1,0 +1,15 @@
+<div class="module-small
+  <%= get_task_alert_color(my_module) %>"
+  id="<%= my_module.id %>"
+  data-module-id="<%= my_module.id %>"
+  data-module-name="<%= my_module.name %>"
+  <% if my_module.my_module_group.present? %>
+  data-module-group="<%= my_module.my_module_group.id %>"
+  <% end %>
+  data-module-x="<%= my_module.x %>"
+  data-module-y="<%= my_module.y %>"
+  data-module-conns="<%= construct_module_connections(my_module) %>">
+  <span>
+    <%= link_to_if can_read_experiment?(my_module.experiment), my_module.name[0], protocols_my_module_path(my_module) %>
+  </span>
+</div>

@@ -1,0 +1,549 @@
+@import 'constants';
+@import "mixins";
+
+/* Index page */
+.report-table {
+  margin-top: 20px;
+}
+
+/* New page navbar */
+.navbar-report {
+  background: $color-white;
+  border-bottom: 1px solid $color-gainsboro;
+  border-left: 0;
+  border-right: 0;
+  border-top: 15px solid $color-concrete;
+  margin-bottom: 15px;
+  min-width: 320px;
+  padding: 25px 20px;
+  position: sticky;
+  top: 50px;
+  z-index: 500;
+
+  div.row {
+    margin-right: 0;
+  }
+
+  #report-menu {
+    form {
+      display: inline-block;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
+  & > div.row {
+    margin-right: 0;
+  }
+}
+
+#sort-report {
+  display: inline-block;
+}
+
+.get-report-pdf-form {
+  display: inline-block;
+}
+
+// Modal for adding content
+label {
+  &[for="_experiment_all"],
+  &[for="_module_all"],
+  &[for="_step_all"],
+  &[for="_result_all"] {
+    font-weight: bold;
+  }
+}
+
+
+/**
+ * Global fix for handsontable
+ */
+.hot-table-container {
+  .ht_master .wtHolder {
+    height: auto !important;
+    width: auto !important;
+  }
+
+  .ht_clone_top,.ht_clone_left,.ht_clone_corner {
+  display: none !important;
+  }
+}
+
+
+/* New page content */
+#report-new {
+  margin-top: -15px;
+}
+
+.report-body {
+  background: $color-silver;
+}
+
+.report-container {
+  background: $color-silver;
+  box-shadow: 0 0 2px 1px $color-silver;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 30px;
+  padding-left: 0;
+  width: auto;
+}
+
+#report-content {
+  @include box-shadow(0 0 58px -10px $color-black);
+  background: $color-white;
+  color: $color-black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -15px;
+  max-width: 800px;
+  min-height: 1200px;
+  min-width: 230px;
+  padding: 45px;
+}
+
+@media (max-width: 720px) {
+  #report-content {
+    padding: 25px;
+  }
+}
+
+/** "New element" floating element */
+.new-element {
+  display: block;
+  position: relative;
+  opacity: 0.05;
+
+  &.initial {
+    /** Special "visual" display of initial new element block */
+    opacity: 0.7;
+    padding: 15px;
+    border-radius: 5px;
+    border: 4px $brand-primary solid;
+
+    .plus-icon {
+      bottom: 16px !important;
+    }
+  }
+
+  .line {
+    display: block;
+    float: left;
+    width: 50%;
+
+    .filler-wrapper {
+      display: block;
+
+      .filler {
+        display: block;
+        height: 4px;
+        background-color: $brand-primary;
+        border-radius: 1px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  .left-line .filler-wrapper {
+    padding: 0 20px 0 0;
+  }
+
+  .right-line .filler-wrapper {
+    padding: 0 0 0 20px;
+  }
+
+  .plus-icon {
+    color: $brand-primary;
+    display: block;
+    text-align: center;
+    width: 40px;
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    margin: 0 0 0 -20px;
+  }
+
+  .clear {
+    clear: left;
+  }
+}
+.new-element:hover {
+  opacity: 1.0;
+
+  .filler {
+    background-color: $brand-primary;
+
+    .plus-icon span {
+      font-weight: bold;
+    }
+  }
+}
+
+/* GLOBAL REPORT ELEMENT STYLE */
+.report-element {
+  width: 100%;
+  margin-bottom: 15px;
+
+  .report-element-header {
+    border-bottom: 2px solid $color-black;
+
+    .user-time {
+      color: $color-emperor;
+      margin-left: 15px;
+    }
+    .controls {
+      margin-right: 15px;
+      font-size: $font-size-h6;
+      opacity: 0.05;
+    }
+  }
+
+  .report-element-body {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .report-element-children {
+    padding-left: 45px;
+    padding-top: 15px;
+  }
+
+  &:hover {
+    background-color: $color-gainsboro;
+    @include box-shadow(0 0 2px 15px $color-gainsboro);
+
+    & > .report-element-header {
+
+      .controls {
+        opacity: 1.0;
+      }
+    }
+  }
+}
+
+/* Project header element style */
+.report-project-header-element {
+  margin-bottom: 60px;
+
+  .report-element-header {
+    border-bottom: none;
+  }
+  .report-element-body {
+    .project-name {
+      border-bottom: 4px solid $color-black;
+    }
+  }
+
+  &:hover > .report-element-body .project-name {
+    color: $brand-primary;
+  }
+}
+
+/* Module element style */
+.report-module-element {
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  .report-element-body {
+    .module-name {
+      margin-left: 15px;
+    }
+    .module-tags {
+      margin-left: 0;
+      margin-top: 10px;
+
+      .module-no-tag {
+        margin-left: 5px;
+      }
+
+      .module-tag {
+        margin-left: 5px;
+        border-radius: 4px;
+        padding: 2px 4px;
+        color: $color-white;
+      }
+    }
+  }
+
+  &:hover > .report-element-body .module-name {
+    color: $brand-primary;
+  }
+}
+
+/* Result element style (generic) */
+.report-result-element {
+  margin-bottom: 5px;
+
+  .report-element-header {
+    border-bottom: none;
+    height: 0;
+
+    .result-name-container {
+      max-width: 570px;
+    }
+
+    .result-icon {
+      display: inline-block;
+      margin-left: 15px;
+    }
+
+    .result-name {
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    .user-time {
+      display: inline-block;
+    }
+  }
+
+  &:hover > .report-element-header {
+    color: $brand-primary;
+  }
+
+  .report-element-body {
+    clear: left;
+    padding-top: 10px !important;
+  }
+}
+
+/* Result asset element style */
+.report-result-asset-element {
+  .report-element-header {
+    .file-name {
+      margin-left: 15px;
+    }
+  }
+}
+
+// Result table element style
+.report-result-table-element {
+  .report-element-body {
+    padding-top: 30px;
+  }
+}
+
+/* Result text element style */
+.report-result-text-element {
+  .report-element-body {
+    .text-container {
+      border-radius: 4px;
+      padding: 5px;
+      background-color: $color-concrete;
+    }
+  }
+}
+
+/** Step element style  */
+.report-step-element {
+  &:hover > .report-element-body .step-name {
+    color: $brand-primary;
+  }
+}
+
+/* Step attachment style (table, asset or checklist) */
+.report-step-attachment-element {
+  .report-element-header {
+    border-bottom: none;
+
+    .attachment-icon {
+      color: $color-emperor;
+    }
+  }
+
+  .report-element-children {
+    height: 0;
+  }
+
+  &:hover > .report-element-header {
+    .attachment-icon {
+      color: $brand-primary;
+    }
+  }
+}
+
+/** Step table element style */
+.report-step-table-element {
+  .report-element-header {
+    .table-name {
+      margin-left: 5px;
+    }
+  }
+
+  &:hover > .report-element-header {
+    .table-name {
+      color: $brand-primary;
+    }
+  }
+}
+
+/** Step asset element style */
+.report-step-asset-element {
+  .report-element-header {
+    .file-name {
+      margin-left: 5px;
+    }
+  }
+
+  &:hover > .report-element-header .file-name {
+    color: $brand-primary;
+  }
+}
+
+/** Step checklist element style */
+.report-step-checklist-element {
+  .report-element-header {
+    .checklist-name {
+      margin-left: 5px;
+    }
+  }
+
+  .report-element-body {
+    padding-top: 0;
+
+    & > ul > li > span.checked {
+      /* Currently nothing */
+    }
+  }
+
+  &:hover > .report-element-header .checklist-name {
+    color: $brand-primary;
+  }
+}
+
+/** Comments element style (generic) */
+.report-comments-element {
+  .report-element-header {
+    border-bottom: none;
+
+    .comments-icon {
+      color: $color-emperor;
+    }
+
+    .comments-name {
+      margin-left: 5px;
+      color: $color-emperor;
+    }
+  }
+
+  .report-element-body {
+    .comments-container {
+      border-radius: 4px;
+      padding: 5px;
+      background-color: $color-alabaster;
+
+       .comment {
+        margin: 3px 2px;
+
+        .comment-prefix {
+          color: $color-emperor;
+        }
+      }
+    }
+  }
+
+  &:hover > .report-element-header {
+    .comments-icon,.comments-name {
+      color: $brand-primary;
+    }
+  }
+}
+
+/** Result comments element style */
+.report-result-comments-element {
+
+}
+
+/** Step comments element style */
+.report-step-comments-element {
+
+}
+
+/** Module samples element */
+.report-module-samples-element {
+  margin-bottom: 0;
+
+  .report-element-header {
+    border-bottom: none;
+
+    .samples-name {
+      margin-left: 5px;
+    }
+  }
+
+  &:hover > .report-element-header {
+    .samples-icon,.samples-name {
+      color: $brand-primary;
+    }
+  }
+}
+
+// Module repository element
+.report-module-repository-element {
+  margin-bottom: 0;
+
+  .report-element-header {
+    border-bottom: 0;
+
+    .repository-name {
+      margin-left: 5px;
+    }
+  }
+
+  &:hover > .report-element-header {
+    .repository-icon,
+    .repository-name {
+      color: $brand-primary;
+    }
+  }
+}
+
+/** Module activity element */
+.report-module-activity-element {
+  margin-bottom: 0;
+
+  .report-element-header {
+    border-bottom: none;
+
+    .activity-name {
+      margin-left: 5px;
+    }
+  }
+
+  .report-element-body {
+    .activity-container {
+      border-radius: 4px;
+      padding: 5px;
+      background-color: $color-alabaster;
+
+       .activity {
+        margin: 3px 2px;
+
+        .activity-prefix {
+          color: $color-emperor;
+        }
+      }
+    }
+  }
+
+  &:hover > .report-element-header {
+    .activity-icon,.activity-name {
+      color: $brand-primary;
+    }
+  }
+}
+
+#save-PDF-to-inventory-warnings {
+  margin-top: 30px;
+}
+
+.save-PDF-to-inventory-alerts {
+  .danger {
+    color: $brand-danger;
+  }
+}

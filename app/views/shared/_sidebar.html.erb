@@ -1,0 +1,11 @@
+<%= content_for :sidebar do %>
+  <div id="slide-panel" class="visible">
+    <div class="tree">
+      <ul>
+        <%= render partial: 'shared/sidebar/projects' %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<%= javascript_include_tag("sidebar") %>

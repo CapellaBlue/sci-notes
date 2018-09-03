@@ -1,0 +1,39 @@
+<% link_to_page = :protocols if local_assigns[:link_to_page].nil? %>
+<% query ||= nil %>
+<% text = query.present? ? highlight(my_module.name, query.strip.split(/\s+/)) : my_module.name %>
+
+<% if my_module.archived? %>
+  <span class="label label-warning"><%=t 'search.index.archived' %></span>
+  <% if can_restore_module?(my_module) %>
+    <%= route_to_other_team module_archive_experiment_url(my_module.experiment),
+                            my_module.experiment.project.team,
+                            text %>
+  <% else %>
+    <%= text %>
+  <% end %>
+<% else %>
+  <% if can_read_experiment?(my_module.experiment) %>
+    <% case link_to_page %>
+      <% when :repositories %>
+        <%= route_to_other_team repository_my_module_path(my_module, repository),
+                                my_module.experiment.project.team,
+                                text %>
+      <% when :protocols %>
+        <%= route_to_other_team protocols_my_module_path(my_module),
+                                my_module.experiment.project.team,
+                                text %>
+      <% when :canvas %>
+        <%= route_to_other_team canvas_experiment_path(my_module.experiment),
+                                my_module.experiment.project.team,
+                                text %>
+      <% when :results %>
+        <%= route_to_other_team results_my_module_path(my_module),
+                                my_module.experiment.project.team,
+                                text %>
+      <% else %>
+        <%= text %>
+    <% end %>
+  <% else %>
+    <%= text %>
+  <% end %>
+<% end %>

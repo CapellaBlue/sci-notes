@@ -1,0 +1,48 @@
+// Place all the styles related to the MyModules controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'constants';
+
+  // Protocols index page
+.task-due-date,
+.task-state-label {
+  .alert-green {
+    color: $brand-success;
+  }
+
+  .alert-yellow {
+    color: $brand-warning;
+  }
+
+  .alert-red {
+    color: $brand-danger;
+  }
+}
+
+/* Results index page */
+
+#results {
+  margin-top: 20px;
+}
+
+.btn-colorselector{
+  background-color: transparent;
+}
+
+.step-container .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.module-large {
+  .description-label {
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+
+  .comment {
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+}

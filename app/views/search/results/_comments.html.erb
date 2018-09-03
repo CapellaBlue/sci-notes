@@ -1,0 +1,62 @@
+<% results.each do |comment| %>
+
+  <p>
+    <span class="fas fa-comment"></span>
+    <% if comment.is_a?(ProjectComment) && comment.project.present? %>
+      <%=t "search.index.comments.project" %>
+    <% elsif comment.is_a?(TaskComment) && comment.my_module.present? %>
+      <%=t "search.index.comments.my_module" %>
+    <% elsif comment.is_a?(StepComment) && comment.step.present? %>
+      <%=t "search.index.comments.step" %>
+    <% elsif comment.is_a?(ResultComment) && comment.result.present? %>
+      <%=t "search.index.comments.result" %>
+    <% end %>
+  </p>
+  <div class="row">
+    <p class="chat-bubble col-xs-4">
+      <%= highlight comment.message, @search_query.strip.split(/\s+/) %>
+    </p>
+  </div>
+  <p>
+    <span>
+      <%=t "search.index.created_by" %>
+      <%= highlight comment.user.full_name, @search_query.strip.split(/\s+/) %>
+    </span>
+    <br>
+    <span>
+      <%=t "search.index.created_at" %>
+      <%=l comment.created_at, format: :full %>
+    </span>
+    <br>
+  </p>
+
+  <p>
+    <% if comment.is_a?(ProjectComment) && comment.project.present? %>
+      <span>
+        <%=t "search.index.project" %>
+        <%= render partial: "search/results/partials/project_text.html.erb",
+                    locals: { project: comment.project, link_to_page: :root } %>
+      </span>
+    <% elsif comment.is_a?(TaskComment) && comment.my_module.present? %>
+      <span>
+        <%=t "search.index.module" %>
+        <%= render partial: "search/results/partials/my_module_text.html.erb",
+                    locals: { my_module: comment.my_module, link_to_page: :canvas } %>
+      </span>
+    <% elsif comment.is_a?(StepComment) && comment.step.present? %>
+      <span>
+        <%=t "search.index.step" %>
+        <%= render partial: "search/results/partials/step_text.html.erb",
+                   locals: { step: comment.step, target: :comment } %>
+      </span>
+    <% elsif comment.is_a?(ResultComment) && comment.result.present? %>
+      <span>
+        <%=t "search.index.result" %>
+        <%= render partial: "search/results/partials/result_text.html.erb",
+                   locals: { result: comment.result, target: :comment } %>
+      </span>
+    <% end %>
+  </p>
+
+  <hr>
+<% end %>

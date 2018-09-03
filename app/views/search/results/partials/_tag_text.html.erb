@@ -1,0 +1,3 @@
+<% query ||= nil %>
+<% text = query.present? ? highlight(tag.name, query.strip.split(/\s+/)) : tag.name %>
+<%= text %>
